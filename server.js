@@ -1,4 +1,3 @@
-
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
@@ -24,7 +23,6 @@ class SieuThuậtToanTaiXiu {
         this.learningStats = { dung: 0, sai: 0, tiLe: 0 };
         this.trongSoThuậtToan = {};
         
-        // Khởi tạo trọng số cho 50 thuật toán
         for (let i = 1; i <= 54; i++) {
             this.trongSoThuậtToan[`tt${i}`] = 1.0;
         }
@@ -34,7 +32,6 @@ class SieuThuậtToanTaiXiu {
     // NHÓM 1: THUẬT TOÁN CẦU CƠ BẢN (1-10)
     // ==========================================
     
-    // 1. Cầu bệt - bẻ cầu khi bệt dài
     tt1_cauBet(lichSu) {
         if (lichSu.length < 3) return null;
         let streak = 1;
@@ -47,7 +44,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 2. Cầu 1-1 (zigzag)
     tt2_cau1_1(lichSu) {
         if (lichSu.length < 4) return null;
         let zigzag = 0;
@@ -56,7 +52,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 3. Cầu 2-1
     tt3_cau2_1(lichSu) {
         if (lichSu.length < 6) return null;
         if (lichSu[0] === lichSu[1] && lichSu[3] === lichSu[4] && lichSu[0] !== lichSu[3]) {
@@ -65,7 +60,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 4. Cầu 1-2
     tt4_cau1_2(lichSu) {
         if (lichSu.length < 6) return null;
         if (lichSu[0] !== lichSu[1] && lichSu[1] === lichSu[2] && lichSu[3] !== lichSu[4]) {
@@ -74,7 +68,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 5. Cầu 2-2
     tt5_cau2_2(lichSu) {
         if (lichSu.length < 8) return null;
         if (lichSu[0] === lichSu[1] && lichSu[2] === lichSu[3] && lichSu[4] === lichSu[5] && lichSu[6] === lichSu[7]) {
@@ -85,7 +78,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 6. Cầu 3-1
     tt6_cau3_1(lichSu) {
         if (lichSu.length < 8) return null;
         if (lichSu[0] === lichSu[1] && lichSu[1] === lichSu[2] && lichSu[3] !== lichSu[2]) {
@@ -96,7 +88,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 7. Cầu 1-3
     tt7_cau1_3(lichSu) {
         if (lichSu.length < 8) return null;
         if (lichSu[0] !== lichSu[1] && lichSu[1] !== lichSu[2] && lichSu[2] === lichSu[3] && lichSu[3] === lichSu[4]) {
@@ -105,7 +96,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 8. Cầu 3-2
     tt8_cau3_2(lichSu) {
         if (lichSu.length < 10) return null;
         if (lichSu[0] === lichSu[1] && lichSu[1] === lichSu[2] && lichSu[3] === lichSu[4]) {
@@ -116,7 +106,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 9. Cầu 2-3
     tt9_cau2_3(lichSu) {
         if (lichSu.length < 10) return null;
         if (lichSu[0] === lichSu[1] && lichSu[2] === lichSu[3] && lichSu[2] !== lichSu[0]) {
@@ -127,7 +116,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 10. Cầu 3-3
     tt10_cau3_3(lichSu) {
         if (lichSu.length < 12) return null;
         if (lichSu[0] === lichSu[1] && lichSu[1] === lichSu[2] && lichSu[3] === lichSu[4] && lichSu[4] === lichSu[5]) {
@@ -142,7 +130,6 @@ class SieuThuậtToanTaiXiu {
     // NHÓM 2: THUẬT TOÁN THỐNG KÊ (11-20)
     // ==========================================
     
-    // 11. Tài nóng trong 10 phiên
     tt11_taiNong10(lichSu) {
         if (lichSu.length < 10) return null;
         const tai10 = lichSu.slice(0,10).filter(r => r === "Tài").length;
@@ -151,7 +138,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 12. Xỉu nóng trong 10 phiên
     tt12_xiuNong10(lichSu) {
         if (lichSu.length < 10) return null;
         const xiu10 = lichSu.slice(0,10).filter(r => r === "Xỉu").length;
@@ -159,7 +145,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 13. Tài nóng 5 phiên
     tt13_taiNong5(lichSu) {
         if (lichSu.length < 5) return null;
         const tai5 = lichSu.slice(0,5).filter(r => r === "Tài").length;
@@ -168,7 +153,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 14. Tỉ lệ 20 phiên
     tt14_tile20(lichSu) {
         if (lichSu.length < 20) return null;
         const tai20 = lichSu.slice(0,20).filter(r => r === "Tài").length;
@@ -177,7 +161,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 15. Tỉ lệ 30 phiên
     tt15_tile30(lichSu) {
         if (lichSu.length < 30) return null;
         const tai30 = lichSu.slice(0,30).filter(r => r === "Tài").length;
@@ -186,7 +169,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 16. Xu hướng 3 phiên
     tt16_xuHuong3(lichSu) {
         if (lichSu.length < 3) return null;
         const last3 = lichSu.slice(0,3);
@@ -195,7 +177,6 @@ class SieuThuậtToanTaiXiu {
         return { pred: "Xỉu", doTinCay: 58, lyDo: `Xu hướng Xỉu ${3-tai3}/3` };
     }
     
-    // 17. Xu hướng 5 phiên
     tt17_xuHuong5(lichSu) {
         if (lichSu.length < 5) return null;
         const last5 = lichSu.slice(0,5);
@@ -204,7 +185,6 @@ class SieuThuậtToanTaiXiu {
         return { pred: "Xỉu", doTinCay: 62, lyDo: `Xu hướng Xỉu ${5-tai5}/5` };
     }
     
-    // 18. Chu kỳ 8 phiên
     tt18_chuKy8(lichSu) {
         if (lichSu.length < 16) return null;
         const c1 = lichSu.slice(0,8).join('');
@@ -213,7 +193,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 19. Chu kỳ 13 phiên
     tt19_chuKy13(lichSu) {
         if (lichSu.length < 26) return null;
         const c1 = lichSu.slice(0,13).join('');
@@ -222,7 +201,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 20. Hồi quy trung bình
     tt20_hoiQuyTrungBinh(lichSu) {
         if (lichSu.length < 20) return null;
         const tai20 = lichSu.slice(0,20).filter(r => r === "Tài").length;
@@ -237,7 +215,6 @@ class SieuThuậtToanTaiXiu {
     // NHÓM 3: THUẬT TOÁN DỰA TRÊN PATTERN LẶP (21-30)
     // ==========================================
     
-    // 21. Pattern 3 phiên lặp
     tt21_pattern3Lap(lichSu) {
         if (lichSu.length < 9) return null;
         const p3 = lichSu.slice(0,3);
@@ -247,7 +224,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 22. Pattern 4 phiên lặp
     tt22_pattern4Lap(lichSu) {
         if (lichSu.length < 12) return null;
         const p4 = lichSu.slice(0,4);
@@ -257,7 +233,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 23. Pattern 5 phiên lặp
     tt23_pattern5Lap(lichSu) {
         if (lichSu.length < 15) return null;
         const p5 = lichSu.slice(0,5);
@@ -267,7 +242,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 24. Pattern đối xứng gương
     tt24_doiXungGuong(lichSu) {
         if (lichSu.length < 10) return null;
         let isMirror = true;
@@ -278,7 +252,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 25. Pattern ABC-ABC
     tt25_patternABC(lichSu) {
         if (lichSu.length < 12) return null;
         const abc = lichSu.slice(0,3);
@@ -290,7 +263,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 26. Pattern ABA-ABA
     tt26_patternABA(lichSu) {
         if (lichSu.length < 12) return null;
         const aba = [lichSu[0], lichSu[1], lichSu[0]];
@@ -302,7 +274,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 27. Cây thông (tăng dần về độ dài)
     tt27_cayThong(lichSu) {
         if (lichSu.length < 15) return null;
         let segments = [];
@@ -323,7 +294,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 28. Xương cá (giảm dần độ dài)
     tt28_xuongCa(lichSu) {
         if (lichSu.length < 15) return null;
         let segments = [];
@@ -344,7 +314,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 29. Pattern 1-2-3
     tt29_pattern123(lichSu) {
         if (lichSu.length < 12) return null;
         if (lichSu[0] === lichSu[1] && lichSu[2] !== lichSu[1] && lichSu[3] === lichSu[4] && lichSu[4] === lichSu[5]) {
@@ -355,7 +324,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 30. Pattern nhi phân (010101)
     tt30_nhiPhan(lichSu) {
         if (lichSu.length < 10) return null;
         let isBinary = true;
@@ -370,7 +338,6 @@ class SieuThuậtToanTaiXiu {
     // NHÓM 4: THUẬT TOÁN HỌC MÁY & CHUỖI (31-40)
     // ==========================================
     
-    // 31. Markov bậc 1
     tt31_markov1(lichSu) {
         if (lichSu.length < 15) return null;
         const map = new Map();
@@ -390,7 +357,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 32. Markov bậc 2
     tt32_markov2(lichSu) {
         if (lichSu.length < 20) return null;
         const map = new Map();
@@ -410,7 +376,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 33. Markov bậc 3
     tt33_markov3(lichSu) {
         if (lichSu.length < 25) return null;
         const map = new Map();
@@ -430,7 +395,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 34. Chuỗi Fibonacci
     tt34_fibonacci(lichSu) {
         const fibs = [2, 3, 5, 8, 13];
         for (let fib of fibs) {
@@ -443,7 +407,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 35. Số nguyên tố
     tt35_soNguyenTo(lichSu) {
         const primes = [2, 3, 5, 7, 11, 13, 17, 19];
         for (let p of primes) {
@@ -454,7 +417,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 36. Số lẻ
     tt36_soLe(lichSu) {
         const odds = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19];
         let trung = 0;
@@ -465,7 +427,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 37. Số chẵn
     tt37_soChan(lichSu) {
         const evens = [2, 4, 6, 8, 10, 12, 14, 16, 18];
         let trung = 0;
@@ -476,7 +437,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 38. Entropy cao (hỗn loạn)
     tt38_entropyCao(lichSu) {
         if (lichSu.length < 20) return null;
         const last20 = lichSu.slice(0,20);
@@ -488,7 +448,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 39. Entropy thấp (ổn định)
     tt39_entropyThap(lichSu) {
         if (lichSu.length < 20) return null;
         const last20 = lichSu.slice(0,20);
@@ -500,7 +459,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 40. Momentum (đà tăng/giảm)
     tt40_momentum(lichSu) {
         if (lichSu.length < 15) return null;
         const last5 = lichSu.slice(0,5).filter(r => r === "Tài").length;
@@ -515,7 +473,6 @@ class SieuThuậtToanTaiXiu {
     // NHÓM 5: THUẬT TOÁN CHỈ BÁO KỸ THUẬT (41-47)
     // ==========================================
     
-    // 41. RSI (Chỉ báo sức mạnh tương đối)
     tt41_rsi(lichSu) {
         if (lichSu.length < 14) return null;
         let up = 0, down = 0;
@@ -530,7 +487,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 42. MACD giả lập
     tt42_macd(lichSu) {
         if (lichSu.length < 26) return null;
         const ema12 = lichSu.slice(0,12).filter(r => r === "Tài").length / 12;
@@ -541,7 +497,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 43. Bollinger Bands
     tt43_bollinger(lichSu) {
         if (lichSu.length < 20) return null;
         const tai20 = lichSu.slice(0,20).filter(r => r === "Tài").length;
@@ -556,7 +511,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 44. Stochastic
     tt44_stochastic(lichSu) {
         if (lichSu.length < 14) return null;
         const last14 = lichSu.slice(0,14);
@@ -567,7 +521,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 45. Đường trung bình MA5/MA10
     tt45_ma5_ma10(lichSu) {
         if (lichSu.length < 15) return null;
         const ma5 = lichSu.slice(0,5).filter(r => r === "Tài").length / 5;
@@ -577,7 +530,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 46. Đường trung bình MA10/MA20
     tt46_ma10_ma20(lichSu) {
         if (lichSu.length < 25) return null;
         const ma10 = lichSu.slice(0,10).filter(r => r === "Tài").length / 10;
@@ -587,7 +539,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 47. Giao cắt kim cương
     tt47_giaoCatKimCuong(lichSu) {
         if (lichSu.length < 20) return null;
         const last10 = lichSu.slice(0,10).filter(r => r === "Tài").length;
@@ -601,7 +552,6 @@ class SieuThuậtToanTaiXiu {
     // NHÓM 6: THUẬT TOÁN DỰA TRÊN LỊCH SỬ API (48-52)
     // ==========================================
     
-    // 48. Độ chính xác gần đây của API
     tt48_doChinhXacGanDay() {
         const recent = this.apiHistory.slice(0, 15);
         const dung = recent.filter(p => p.ket_qua === "✅ ĐÚNG").length;
@@ -617,7 +567,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 49. Xu hướng đúng/sai của API
     tt49_xuHuongDungSaiAPI() {
         const ganDay = this.apiHistory.slice(0, 10);
         let dungCount = 0, saiCount = 0;
@@ -637,7 +586,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 50. Độ tin cậy trung bình của API
     tt50_doTinCayTB() {
         const ganDay = this.apiHistory.slice(0, 20);
         let tongDoTinCay = 0;
@@ -660,7 +608,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 51. Phiên đã dự đoán sai gần nhất
     tt51_phienSaiGanNhat() {
         for (let i = 0; i < this.apiHistory.length; i++) {
             if (this.apiHistory[i].ket_qua === "❌ SAI") {
@@ -671,7 +618,6 @@ class SieuThuậtToanTaiXiu {
         return null;
     }
     
-    // 52. Chuỗi đúng/sai của API
     tt52_chuoiDungSaiAPI() {
         let maxDung = 0, maxSai = 0;
         let curDung = 0, curSai = 0;
@@ -687,10 +633,9 @@ class SieuThuậtToanTaiXiu {
     }
 
     // ==========================================
-    // NHÓM 7: THUẬT TOÁN TỔNG HỢP & XÁC SUẤT (53-54)
+    // NHÓM 7: THUẬT TOÁN TỔNG HỢP (53-54)
     // ==========================================
     
-    // 53. Tổng hợp trọng số 50 thuật toán
     tt53_tongHopTrongSo(lichSu) {
         let diemTai = 0, diemXiu = 0;
         let soTT = 0;
@@ -722,17 +667,14 @@ class SieuThuậtToanTaiXiu {
         return { pred: finalPred, doTinCay: Math.round(doTinCay), lyDo: `Tổng hợp ${soTT}/52 thuật toán` };
     }
     
-    // 54. Siêu tổng hợp (kết hợp tất cả)
     tt54_sieuTongHop(lichSu) {
         const ketQuaThuong = this.tt53_tongHopTrongSo(lichSu);
         if (!ketQuaThuong) return { pred: "Tài", doTinCay: 55, lyDo: "Chưa đủ thuật toán chạy" };
         
-        // Lấy thêm thông tin từ lịch sử API
         const tongDung = this.learningStats.dung;
         const tongSai = this.learningStats.sai;
         const tiLeThucTe = tongDung + tongSai > 0 ? (tongDung / (tongDung + tongSai)) * 100 : 50;
         
-        // Điều chỉnh độ tin cậy dựa trên tỉ lệ thực tế
         let doTinCayDieuChinh = ketQuaThuong.doTinCay;
         if (tiLeThucTe < 40) doTinCayDieuChinh = Math.max(48, doTinCayDieuChinh - 15);
         if (tiLeThucTe > 60) doTinCayDieuChinh = Math.min(92, doTinCayDieuChinh + 5);
@@ -745,7 +687,7 @@ class SieuThuậtToanTaiXiu {
     }
 
     // ==========================================
-    // HÀM CHÍNH: CẬP NHẬT DỮ LIỆU & DỰ ĐOÁN
+    // HÀM CHÍNH
     // ==========================================
     
     async fetchAndAnalyzeHistory(apiUrl) {
@@ -820,6 +762,24 @@ class SieuThuậtToanTaiXiu {
 
 const analyzer = new SieuThuậtToanTaiXiu();
 
+// Endpoint gốc - QUAN TRỌNG: tránh lỗi "Not Found"
+app.get('/', (req, res) => {
+    res.json({
+        name: "🚀 SIÊU THUẬT TOÁN TÀI XỈU - 54 THUẬT TOÁN",
+        author: "@tranhoang2286",
+        version: "3.0",
+        status: "online",
+        endpoints: {
+            "Dự đoán chính (54 thuật toán)": "/sunwin/tx-vip",
+            "Cầu đã tích lũy": "/sunwin/cau-da-tich-luy",
+            "Thống kê học tập": "/sunwin/thong-ke-hoc-tap",
+            "API gốc (proxy)": "/sunwin/tx"
+        },
+        huong_dan: "Gọi /sunwin/tx-vip để nhận dự đoán"
+    });
+});
+
+// Endpoint dự đoán chính
 app.get('/sunwin/tx-vip', async (req, res) => {
     try {
         const result = await analyzer.getFinalPrediction(API_GOC);
@@ -830,6 +790,7 @@ app.get('/sunwin/tx-vip', async (req, res) => {
     }
 });
 
+// Endpoint xem cầu tích lũy
 app.get('/sunwin/cau-da-tich-luy', async (req, res) => {
     try {
         await analyzer.fetchAndAnalyzeHistory(API_GOC);
@@ -839,6 +800,7 @@ app.get('/sunwin/cau-da-tich-luy', async (req, res) => {
     }
 });
 
+// Endpoint thống kê học tập
 app.get('/sunwin/thong-ke-hoc-tap', async (req, res) => {
     try {
         await analyzer.fetchAndAnalyzeHistory(API_GOC);
@@ -848,6 +810,7 @@ app.get('/sunwin/thong-ke-hoc-tap', async (req, res) => {
     }
 });
 
+// Endpoint proxy API gốc
 app.get('/sunwin/tx', async (req, res) => {
     try {
         const response = await axios.get(API_GOC, { timeout: 10000 });
@@ -857,21 +820,10 @@ app.get('/sunwin/tx', async (req, res) => {
     }
 });
 
-app.get('/', (req, res) => {
-    res.json({
-        name: "SIÊU THUẬT TOÁN TÀI XỈU - 54 THUẬT TOÁN",
-        author: "@tranhoang2286",
-        version: "3.0",
-        endpoints: {
-            "Dự đoán chính (54 thuật toán)": "/sunwin/tx-vip",
-            "Cầu đã tích lũy": "/sunwin/cau-da-tich-luy",
-            "Thống kê học tập": "/sunwin/thong-ke-hoc-tap",
-            "API gốc": "/sunwin/tx"
-        }
-    });
-});
-
+// Khởi động server
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`\n🚀 54 THUẬT TOÁN TÀI XỈU - ${PORT}`);
-    console.log(`📡 7 nhóm: Cầu cơ bản | Thống kê | Pattern lặp | Học máy | Chỉ báo kỹ thuật | Lịch sử API | Tổng hợp`);
+    console.log(`\n🚀 SIÊU THUẬT TOÁN TÀI XỈU - ${PORT}`);
+    console.log(`📡 54 thuật toán | 7 nhóm phân tích`);
+    console.log(`✅ Endpoint gốc: http://localhost:${PORT}/`);
+    console.log(`🎯 Dự đoán: http://localhost:${PORT}/sunwin/tx-vip`);
 });
